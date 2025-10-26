@@ -4,7 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;  // 后端服务端口，可自定义（需与前端接口地址对应）
+// 修正：优先用平台动态端口，本地默认 3000
+const PORT = process.env.PORT || 3000;
 
 // 中间件：允许跨域请求（解决前端调用后端的跨域问题）
 app.use(cors());
@@ -55,7 +56,9 @@ app.get('/api/records', (req, res) => {
   }
 });
 
-// 启动服务器
+// 修正：日志显示正确的本地服务地址
 app.listen(PORT, () => {
-  console.log(`后端服务已启动，地址：https://github.com/1035074842/h-team-checkin-backend1111.git}`);
+  console.log(`后端服务已启动，本地地址：http://localhost:${PORT}`);
+  console.log(`提交打卡接口：http://localhost:${PORT}/api/checkin`);
+  console.log(`获取记录接口：http://localhost:${PORT}/api/records`);
 });
